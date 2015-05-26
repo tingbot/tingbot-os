@@ -3,6 +3,7 @@
 BASE_IMG_URL := http://downloads.raspberrypi.org/raspbian/images/raspbian-2015-05-07/2015-05-05-raspbian-wheezy.zip
 
 build: dl/base.img
+	chmod 600 tingbot.key
 	rm -rf build
 	mkdir build
 	cp dl/base.img build/disk.img
