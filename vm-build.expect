@@ -1,0 +1,42 @@
+#!/usr/bin/expect -f
+
+set timeout 300
+
+spawn qemu-system-arm \
+    -kernel kernel-qemu \
+    -cpu arm1176 \
+    -m 256 \
+    -M versatilepb \
+    -no-reboot \
+    -nographic \
+    -append "root=/dev/sda2 panic=1 rootfstype=ext4 rw console=ttyAMA0" \
+    -redir tcp:2222::22 \
+    -hda build/disk.img 
+
+expect "raspberrypi login: "
+send "pi\r"
+
+expect "Password: "
+send "raspberry\r"
+
+# install the tingbot ssh key
+set key_fp [open "tingbot.key.pub" r]
+set key_data [read $key_fp]
+
+expect "pi@raspberrypi:~$ "
+send "mkdir -p ~/.ssh\r"
+
+expect "pi@raspberrypi:~$ "
+send "echo '$key_data' >> ~/.ssh/authorized_keys\r"
+
+expect "pi@raspberrypi:~$ "
+system "sleep 5"
+
+send "service ssh status\r"
+
+# ssh into the vm and run the build script. This moves the main work
+# into a sane shell (not expect!)
+system "cat build.sh | ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i tingbot.key -p 2222 pi@localhost bash"
+
+send "sudo shutdown -r now\r"
+expect eof

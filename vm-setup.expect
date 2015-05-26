@@ -1,0 +1,27 @@
+#!/usr/bin/expect -f
+
+set timeout 300
+
+spawn qemu-system-arm \
+    -kernel kernel-qemu \
+    -cpu arm1176 \
+    -m 256 \
+    -M versatilepb \
+    -no-reboot \
+    -nographic \
+    -append "root=/dev/sda2 panic=1 rootfstype=ext4 rw single console=ttyAMA0" \
+    -hda build/disk.img 
+
+# ld.so.preload contains a pi-specific library, move it aside for now
+expect "root@(none):~# "
+send "mv /etc/ld.so.preload /etc/ld.so.preload.bak\r"
+
+# the disk image comes in as sda1/2, so mount them there
+expect "# "
+send "sed -i.bak s/mmcblk0p/sda/g /etc/fstab\r"
+
+# reboot (this is actually a shutdown due to -no-reboot flag)
+expect "# "
+send "shutdown -r now\r"
+
+expect eof
