@@ -1,0 +1,20 @@
+#!/usr/bin/python
+
+import sys, json, subprocess
+
+output = ''
+
+output += 'ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n'
+output += 'update_config=1\n'
+
+output += '\n'
+
+networks = json.load(sys.stdin)
+
+for network in networks:
+    ssid = network['ssid']
+    passphrase = network['passphrase']
+
+    output += subprocess.check_output(['/usr/bin/wpa_passphrase', ssid, passphrase])
+
+sys.stdout.write(output)
