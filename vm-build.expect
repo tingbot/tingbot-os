@@ -36,7 +36,7 @@ send "service ssh status\r"
 
 # ssh into the vm and run the build script. This moves the main work
 # into a sane shell (not expect!)
-system "cat build.sh | ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i tingbot.key -p 2222 pi@localhost bash"
+system "./retry.sh 5 sh -c 'cat build.sh | ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i tingbot.key -p 2222 pi@localhost bash'"
 
 send "sudo shutdown -r now\r"
 expect eof
