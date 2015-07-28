@@ -13,7 +13,7 @@
 # sudo update-rc.d tbwifisetup start 01 S
 
 do_start () {
-    cat /boot/networks.json | /usr/local/bin/tbwifisetup > /etc/wpa_supplicant/wpa_supplicant.conf
+    cat /boot/networks.json | /usr/bin/tbwifisetup > /etc/wpa_supplicant/wpa_supplicant.conf
 }
 
 case "$1" in
