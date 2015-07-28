@@ -19,7 +19,7 @@ sudo apt-get -y install avahi-daemon
 
 # install avahi-daemon config
 (
-    sudo tee /etc/avahi/services/tingbot.service > /dev/null <<EOF
+  sudo tee /etc/avahi/services/tingbot.service > /dev/null <<EOF
 <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
 <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
 <service-group>
@@ -29,6 +29,14 @@ sudo apt-get -y install avahi-daemon
     <port>22</port>
   </service>
 </service-group>
+EOF
+)
+
+
+# add screen config to /etc/modules
+(
+  sudo tee -a /etc/modules > /dev/null <<EOF
+fbtft_device name=sainsmart32_spi gpios=reset:22,dc:27 rotate=270 speed=56000000 fps=50 debug=1
 EOF
 )
 
