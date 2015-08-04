@@ -5,8 +5,10 @@ set -o errexit
 set -o pipefail
 
 sudo apt-get -y update
-sudo apt-get -y install python-pip
+sudo apt-get -y install python-pip python-dev 
 sudo apt-get -y install avahi-daemon
+
+sudo pip install pillow==2.9.0 requests==2.7.0
 
 # install tbprocessd
 (
