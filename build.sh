@@ -19,21 +19,6 @@ sudo pip install pillow==2.9.0 requests==2.7.0
   sudo rm -rf tbprocessd
 )
 
-# install avahi-daemon config
-(
-  sudo tee /etc/avahi/services/tingbot.service > /dev/null <<EOF
-<?xml version="1.0" standalone='no'?><!--*-nxml-*-->
-<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-<service-group>
-  <name replace-wildcards="yes">%h</name>
-  <service>
-    <type>_tingbot-ssh._tcp</type>
-    <port>22</port>
-  </service>
-</service-group>
-EOF
-)
-
 
 # add screen config to /etc/modules
 (
