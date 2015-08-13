@@ -32,4 +32,11 @@ fbtft_device name=sainsmart32_spi gpios=reset:22,dc:27 rotate=270 speed=56000000
 EOF
 )
 
+# install tingbot libraries
+(
+  git clone https://github.com/tingbot/tide.git tide
+  sudo cp -R tide/Tide/tingbot /usr/lib/python2.7/dist-packages
+  rm -rf tide
+)
+
 sudo REPO_URI=https://github.com/notro/rpi-firmware rpi-update 4815829b3f98e1b9c2648d9643dfe993054923ce
