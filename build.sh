@@ -19,6 +19,11 @@ sudo pip install pillow==2.9.0 requests==2.7.0
   sudo rm -rf tbprocessd
 )
 
+# install tingbot-wifi util
+(
+  sudo update-rc.d tbwifisetup defaults
+  sudo update-rc.d tbwifisetup enable
+)
 
 # add screen config to /etc/modules
 (
