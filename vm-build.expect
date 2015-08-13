@@ -34,6 +34,9 @@ system "sleep 5"
 
 send "service ssh status\r"
 
+# copy the contents of the root folder to / on the pi
+system "./retry.sh 5 rsync -rlp --rsync-path='sudo rsync' --rsh='ssh -l pi -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i tingbot.key -p 2222' root/ pi@localhost:/"
+
 # ssh into the vm and run the build script. This moves the main work
 # into a sane shell (not expect!)
 system "./retry.sh 5 sh -c 'cat build.sh | ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i tingbot.key -p 2222 pi@localhost bash'"
