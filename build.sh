@@ -25,10 +25,11 @@ sudo pip install pillow==2.9.0 requests==2.7.0
   sudo update-rc.d tbwifisetup enable
 )
 
-# add screen config to /etc/modules
+# add screen config to /boot/config.txt
 (
-  sudo tee -a /etc/modules > /dev/null <<EOF
-fbtft_device name=sainsmart32_spi gpios=reset:22,dc:27 rotate=270 speed=56000000 fps=50 debug=1
+  sudo tee -a /boot/config.txt > /dev/null <<EOF
+dtparam=spi=on
+dtoverlay=tingbot:xohms=80
 EOF
 )
 
@@ -39,4 +40,7 @@ EOF
   rm -rf tide
 )
 
-sudo REPO_URI=https://github.com/notro/rpi-firmware rpi-update 4815829b3f98e1b9c2648d9643dfe993054923ce
+# sudo REPO_URI=https://github.com/notro/rpi-firmware rpi-update 4815829b3f98e1b9c2648d9643dfe993054923ce
+# This version of rpi-update gets the FBTFT kernel with SPI DMA
+# See https://github.com/notro/fbtft/wiki#install
+sudo REPO_URI=https://github.com/notro/rpi-firmware rpi-update
