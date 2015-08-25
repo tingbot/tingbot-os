@@ -30,9 +30,13 @@ expect "pi@raspberrypi:~$ "
 send "echo '$key_data' >> ~/.ssh/authorized_keys\r"
 
 expect "pi@raspberrypi:~$ "
+send "sudo service ssh restart\r"
+expect "pi@raspberrypi:~$ "
+
 system "sleep 5"
 
 send "service ssh status\r"
+expect "pi@raspberrypi:~$ "
 
 # copy the contents of the root folder to / on the pi
 system "./retry.sh 5 rsync -rlp --rsync-path='sudo rsync' --rsh='ssh -l pi -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i tingbot.key -p 2222' root/ pi@localhost:/"
