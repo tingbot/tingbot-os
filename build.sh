@@ -14,6 +14,7 @@ sudo pip install pillow==2.9.0 requests==2.7.0
 (
   git clone https://github.com/tingbot/tbprocessd.git
   cd tbprocessd
+  sudo pip install -r requirements.txt
   sudo make install
   cd ..
   sudo rm -rf tbprocessd
