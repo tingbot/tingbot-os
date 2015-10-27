@@ -8,7 +8,7 @@ sudo apt-get -y update
 sudo apt-get -y install python-pip python-dev 
 sudo apt-get -y install avahi-daemon evtest tslib libts-bin libzmq-dev
 
-sudo pip install pillow==2.9.0 requests==2.7.0
+sudo pip install pillow==2.9.0 requests==2.7.0 evdev==0.5.0
 
 # install tbprocessd
 (
