@@ -10,6 +10,7 @@ build: dl/base.img
 	expect -f vm-setup.expect
 	expect -f vm-build.expect
 	expect -f vm-cleanup.expect
+	ditto -ck build/disk.img build/disk.img.zip
 
 dl/base.img:
 	mkdir -p dl
