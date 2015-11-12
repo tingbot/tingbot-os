@@ -36,9 +36,9 @@ EOF
 
 # install tingbot libraries
 (
-  git clone https://github.com/tingbot/tide.git tide
-  sudo cp -R tide/Tide/tingbot /usr/lib/python2.7/dist-packages
-  rm -rf tide
+  git clone https://github.com/tingbot/tingbot-python.git tingbot-python
+  sudo cp -R tingbot-python/tingbot /usr/lib/python2.7/dist-packages
+  rm -rf tingbot-python
 )
 
 # add fbcon=map:10 to kernel cmdline
