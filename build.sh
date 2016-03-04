@@ -8,6 +8,8 @@ sudo apt-get -y update
 sudo apt-get -y install python-pip python-dev
 sudo apt-get -y install avahi-daemon evtest tslib libts-bin
 
+sudo pip install pip==8.0.3
+sudo pip install wheel==0.29.0 setuptools==20.2.2
 sudo pip install pillow==2.9.0 requests==2.7.0 evdev==0.5.0
 
 # install tbprocessd
