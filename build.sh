@@ -47,4 +47,4 @@ sudo sed -i '1 s/$/ fbcon=map:10/' /boot/cmdline.txt
 # sudo REPO_URI=https://github.com/notro/rpi-firmware rpi-update 4815829b3f98e1b9c2648d9643dfe993054923ce
 # This version of rpi-update gets the FBTFT kernel with SPI DMA
 # See https://github.com/notro/fbtft/wiki#install
-sudo REPO_URI=https://github.com/notro/rpi-firmware rpi-update
+sudo rpi-update 31615deb9406ffc3ab823e76d12dedf373c8e087
