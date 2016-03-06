@@ -2,6 +2,16 @@
 
 set timeout 300
 
+# It's not possible to boot into Raspbian in qemu normally because of a file in
+# the image called "/etc/ld.so.preload", which loads a library that overrides the
+# default memcpy implementation. It's called raspi-copies-and-fills.
+#
+# The following command patches this file by commenting the line. It's pretty
+# fragile, as it relies on the first occurence of this string being the contents
+# of the file /etc/ld.so.preload. So, yeah. Might need looking at when the base 
+# raspbian image is updated.
+system "./patch-img.py $'/usr/lib/arm-linux-gnueabihf/libarmmem.so\n' $'#usr/lib/arm-linux-gnueabihf/libarmmem.so\n' build/disk.img"
+
 spawn qemu-system-arm \
     -kernel kernel-qemu \
     -cpu arm1176 \
@@ -9,19 +19,23 @@ spawn qemu-system-arm \
     -M versatilepb \
     -no-reboot \
     -nographic \
-    -append "root=/dev/sda2 panic=1 rootfstype=ext4 rw single console=ttyAMA0" \
+    -append "root=/dev/sda2 panic=1 rootfstype=ext4 rw init=/bin/bash console=ttyAMA0" \
     -hda build/disk.img 
 
-# ld.so.preload contains a pi-specific library, move it aside for now
-expect "root@(none):~# "
-send "mv /etc/ld.so.preload /etc/ld.so.preload.bak\r"
+# patch /etc/fstab to prevent errors during boot. It contains references
+# to the memorycard that's not present on boot in qemu. In its place we 
+# put a reference to only the /proc filesystem
+expect "root@(none):/# "
+send "mv /etc/fstab /etc/fstab.bak\r"
 
-# the disk image comes in as sda1/2, so mount them there
 expect "# "
-send "sed -i.bak s/mmcblk0p/sda/g /etc/fstab\r"
+send "echo 'proc            /proc           proc    defaults          0       0' > /etc/fstab\r"
 
-# reboot (this is actually a shutdown due to -no-reboot flag)
 expect "# "
-send "shutdown -r now\r"
+send "sync\r"
+
+# reboot
+expect "# "
+send "\x04"
 
 expect eof

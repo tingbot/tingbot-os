@@ -9,28 +9,23 @@ spawn qemu-system-arm \
     -M versatilepb \
     -no-reboot \
     -nographic \
-    -append "root=/dev/sda2 panic=1 rootfstype=ext4 rw single console=ttyAMA0" \
+    -append "root=/dev/sda2 panic=1 rootfstype=ext4 rw init=/bin/bash console=ttyAMA0" \
     -hda build/disk.img
 
-# restore ld.so.preload
-expect "root@raspberrypi:~# "
-send "mv /etc/ld.so.preload.bak /etc/ld.so.preload\r"
-
 # restore fstab
-expect "# "
+expect "root@(none):/# "
 send "rm /etc/fstab\r"
 
 expect "# "
 send "mv /etc/fstab.bak /etc/fstab\r"
 
-# restart (this will shutdown due to -no-reboot flag)
 expect "# "
-send "shutdown -r now\r"
+send "sync\r"
 
-# for some reason the pi makes it to runlevel 6 without rebooting,
-# so tell it again.
-expect "sulogin: root account is locked, starting shell"
+# reboot
 expect "# "
-send "reboot\r"
+send "\x04"
 
 expect eof
+
+system "./patch-img.py $'#usr/lib/arm-linux-gnueabihf/libarmmem.so\n' $'/usr/lib/arm-linux-gnueabihf/libarmmem.so\n' build/disk.img"
