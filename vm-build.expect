@@ -38,6 +38,10 @@ system "sleep 5"
 send "service ssh status\r"
 expect "pi@raspberrypi:~$ "
 
+# mount the /boot partition
+send "sudo mount -t vfat /dev/sda1 /boot\r"
+expect "pi@raspberrypi:~$ "
+
 # copy the contents of the root folder to / on the pi
 system "./retry.sh 5 rsync -rlp --rsync-path='sudo rsync' --rsh='ssh -l pi -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i tingbot.key -p 2222' root/ pi@localhost:/"
 
