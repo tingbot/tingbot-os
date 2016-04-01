@@ -2,7 +2,7 @@
 
 import mmap, argparse
 
-parser = argparse.ArgumentParser(description='Inplace find/replace a file.')
+parser = argparse.ArgumentParser(description='Inplace find/replace a file. Replaces the first occurrence only.')
 
 parser.add_argument('find', type=str)
 parser.add_argument('replace', type=str)
