@@ -5,6 +5,10 @@ set -o errexit
 set -o pipefail
 
 sudo apt-get -y update
+
+# need to free some space
+sudo apt-get -y remove wolfram-engine
+
 sudo apt-get -y install python-pip python-dev
 sudo apt-get -y install avahi-daemon evtest tslib libts-bin
 
