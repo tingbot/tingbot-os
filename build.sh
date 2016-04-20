@@ -14,6 +14,7 @@ sudo pip install pillow==2.9.0 requests==2.7.0
 (
   git clone https://github.com/tingbot/tbprocessd.git
   cd tbprocessd
+  git reset --hard a18b0ed68236330119e28d86dcc836f96e0ddda9
   sudo make install
   cd ..
   sudo rm -rf tbprocessd
@@ -35,6 +36,9 @@ EOF
 # install tingbot libraries
 (
   git clone https://github.com/tingbot/tide.git tide
+  cd tide
+  git reset --hard f7691a7bf2b87e553cd06e33d9c8a8ede54b7972
+  cd ..
   sudo cp -R tide/Tide/tingbot /usr/lib/python2.7/dist-packages
   rm -rf tide
 )
