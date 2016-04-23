@@ -1,0 +1,8 @@
+[Unit]
+Description=tbprocessd
+
+[Service]
+ExecStart=/usr/local/bin/tbprocessd
+
+[Install]
+WantedBy=multi-user.target
