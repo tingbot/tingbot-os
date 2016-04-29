@@ -18,12 +18,7 @@ sudo pip install pillow==2.9.0 requests==2.7.0 evdev==0.5.0
 
 # install tbprocessd
 (
-  git clone https://github.com/tingbot/tbprocessd.git
-  cd tbprocessd
-  sudo pip install -r requirements.txt
-  sudo make install
-  cd ..
-  sudo rm -rf tbprocessd
+  sudo pip install git+https://github.com/tingbot/tbprocessd.git@37441396607103ece37f19ddf2595e9f55cad353
 )
 
 # install tingbot-wifi util
