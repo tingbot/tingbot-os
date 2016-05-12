@@ -7,6 +7,7 @@ build: dl/$(BASE_IMG_NAME)
 	chmod 600 tingbot.key
 	rm -rf build
 	mkdir build
+	dpkg -b root/ build/tingbot-os.deb
 	cp dl/$(BASE_IMG_NAME) build/disk.img
 	expect -f vm-setup.expect
 	expect -f vm-build.expect

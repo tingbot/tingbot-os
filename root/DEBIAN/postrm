@@ -1,0 +1,13 @@
+#!/bin/sh
+
+undivert() {
+    dpkg-divert --package tingbot-os --remove --rename --divert "$1.tbbak" "$1"
+}
+
+if [ "$1" = "remove" -o "$1" = "abort-install" -o "$1" = "disappear" ]; then
+    rm -rf /boot/config.txt
+    undivert /boot/config.txt
+    undivert /etc/ts.conf
+    rm -rf /boot/cmdline.txt
+    undivert /boot/cmdline.txt
+fi

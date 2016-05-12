@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -o errexit
+
+divert() {
+    dpkg-divert --package tingbot-os --add --rename --divert "$1.tbbak" "$1"
+}
+
+divert /boot/config.txt
+divert /etc/ts.conf
+divert /boot/cmdline.txt
