@@ -1,6 +1,6 @@
 .PHONY: build
 
-BASE_IMG_URL := http://downloads.raspberrypi.org/raspbian/images/raspbian-2016-02-29/2016-02-26-raspbian-jessie.zip
+BASE_IMG_URL := http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2016-03-18/2016-03-18-raspbian-jessie-lite.zip
 BASE_IMG_NAME := $(basename $(notdir $(BASE_IMG_URL))).img
 
 build: dl/$(BASE_IMG_NAME)
