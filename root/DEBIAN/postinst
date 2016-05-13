@@ -26,4 +26,4 @@ pip install git+https://github.com/tingbot/tingbot-python.git@41c560637c9243f452
 
 update-rc.d tbwifisetup defaults
 update-rc.d tbwifisetup enable
-
+systemctl enable tbprocessd
