@@ -7,6 +7,8 @@ build: dl/$(BASE_IMG_NAME)
 	chmod 600 tingbot.key
 	rm -rf build
 	mkdir build
+	# clean up .DS_Store files
+	find root -name ".DS_Store" -delete
 	dpkg -b root/ build/tingbot-os.deb
 	cp dl/$(BASE_IMG_NAME) build/disk.img
 	expect -f vm-setup.expect
