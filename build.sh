@@ -6,4 +6,4 @@ set -o errexit
 sudo apt-get -y update
 sudo apt-get -y install gdebi-core
 
-sudo gdebi tingbot-os.deb
+sudo gdebi --non-interactive tingbot-os.deb
