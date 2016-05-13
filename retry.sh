@@ -12,7 +12,7 @@ function now () {
     date +%s
 }
 
-if [[ $# < 2 ]]; then
+if [[ $# -lt 2 ]]; then
     usage
 fi
 
