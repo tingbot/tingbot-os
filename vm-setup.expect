@@ -31,6 +31,11 @@ send "mv /etc/fstab /etc/fstab.bak\r"
 expect "# "
 send "echo 'proc            /proc           proc    defaults          0       0' > /etc/fstab\r"
 
+# resize the main partition
+# the filesystem will be expanded on next boot.
+expect "# "
+send "parted -s /dev/sda resizepart 2 100%\r"
+
 expect "# "
 send "sync\r"
 
@@ -39,3 +44,33 @@ expect "# "
 send "\x04"
 
 expect eof
+
+# reboot to expand the filesystem
+
+# spawn qemu-system-arm \
+#     -kernel kernel-qemu \
+#     -cpu arm1176 \
+#     -m 256 \
+#     -M versatilepb \
+#     -no-reboot \
+#     -nographic \
+#     -append "root=/dev/sda2 panic=1 rootfstype=ext4 rw console=ttyAMA0" \
+#     -redir tcp:2222::22 \
+#     -hda build/disk.img 
+
+# expect "raspberrypi login: "
+# send "pi\r"
+
+# expect "Password: "
+# send "raspberry\r"
+
+# expect "pi@raspberrypi:~$ "
+# send "sudo resize2fs /dev/sda2\r"
+
+# expect "pi@raspberrypi:~$ "
+# send "df -h\r"
+
+# expect "pi@raspberrypi:~$ "
+# send "sudo shutdown -r now\r"
+
+# expect eof

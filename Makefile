@@ -11,6 +11,8 @@ build: dl/$(BASE_IMG_NAME)
 	find root -name ".DS_Store" -delete
 	dpkg -b root/ build/tingbot-os.deb
 	cp dl/$(BASE_IMG_NAME) build/disk.img
+	# add 200M to the disk image
+	dd if=/dev/zero count=200 bs=1m >> build/disk.img
 	expect -f vm-setup.expect
 	expect -f vm-build.expect
 	expect -f vm-cleanup.expect
