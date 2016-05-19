@@ -19,7 +19,7 @@ class TingApp(object):
     
     @cached_property
     def info(self):
-        info_path = os.path.join(self.path, 'info.json')
+        info_path = os.path.join(self.path, 'app.tbinfo')
         try:
             with open(info_path) as f:
                 return json.load(f)
