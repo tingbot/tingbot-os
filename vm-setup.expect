@@ -10,7 +10,7 @@ set timeout 300
 # fragile, as it relies on the first occurence of this string being the contents
 # of the file /etc/ld.so.preload. So, yeah. Might need looking at when the base 
 # raspbian image is updated.
-system "./patch-img.py $'/usr/lib/arm-linux-gnueabihf/libarmmem.so\n' $'#usr/lib/arm-linux-gnueabihf/libarmmem.so\n' build/disk.img"
+system "./patch-img.py '/usr/lib/arm-linux-gnueabihf/libarmmem.so\n' '#usr/lib/arm-linux-gnueabihf/libarmmem.so\n' build/disk.img"
 
 spawn qemu-system-arm \
     -kernel kernel-qemu \
