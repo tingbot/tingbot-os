@@ -19,6 +19,13 @@ send "pi\r"
 expect "Password: "
 send "raspberry\r"
 
+# make the filesystem fill the main partition
+expect "pi@raspberrypi:~$ "
+send "sudo resize2fs /dev/sda2\r"
+
+expect "pi@raspberrypi:~$ "
+send "df -h\r"
+
 # install the tingbot ssh key
 set key_fp [open "tingbot.key.pub" r]
 set key_data [read $key_fp]
