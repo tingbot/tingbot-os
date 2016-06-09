@@ -25,6 +25,7 @@ class TingApp(object):
                 return json.load(f)
         except:
             logging.exception('Failed to get app info at %s', info_path)
+            return {}
     
     @property
     def name(self):
