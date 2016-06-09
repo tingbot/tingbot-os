@@ -15,14 +15,14 @@ echo "dtoverlay=tingbot:xohms=80" >> /boot/config.txt
 
 # Map the console tty to the screen for the boot
 # The /boot/cmdline.txt file was set aside in preinst
-sed "1 s/$/ fbcon=map:10/" /boot/cmdline.txt.tbbak > /boot/cmdline.txt
+sed "1 s/$/ fbcon=map:10 consoleblank=0/" /boot/cmdline.txt.tbbak > /boot/cmdline.txt
 
 pip install pip==8.0.3
 pip install wheel==0.29.0 setuptools==20.2.2
 pip install pillow==2.9.0 requests==2.7.0 evdev==0.5.0
 
 pip install git+https://github.com/tingbot/tbprocessd.git@37441396607103ece37f19ddf2595e9f55cad353
-pip install git+https://github.com/tingbot/tingbot-python.git@41c560637c9243f452dda199c733afbc92f657fc
+pip install git+https://github.com/tingbot/tingbot-python.git@v0.4.0
 
 update-rc.d tbwifisetup defaults
 update-rc.d tbwifisetup enable
