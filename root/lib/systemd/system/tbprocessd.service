@@ -3,6 +3,7 @@ Description=tbprocessd
 
 [Service]
 Environment=HOME_APP=/apps/home
+Environment=STARTUP_APP=/apps/startup
 ExecStart=/usr/local/bin/tbprocessd
 
 [Install]
