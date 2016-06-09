@@ -66,12 +66,13 @@ class TingApp(object):
         return image
 
     def draw(self, surface, centered_at):
-        surface.image(
-            self.icon,
-            xy=centered_at,
-            align='center',
-            scale=1,
-        )
+        if self.icon:
+            surface.image(
+                self.icon,
+                xy=centered_at,
+                align='center',
+                scale=1,
+            )
         surface.image(
             self.name_image,
             xy=(centered_at[0], centered_at[1]+57),
