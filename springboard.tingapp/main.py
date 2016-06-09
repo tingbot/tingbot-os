@@ -110,6 +110,13 @@ def button_right():
 def on_touch(action):
     if action == 'down':
         app = apps[state['app_index']]
+        screen.fill(color='black')
+        screen.text(
+            'Opening %s...' % os.path.basename(app.path),
+            font_size=14,
+            color='white')
+
+        screen.update()
         subprocess.check_call(['tbopen', os.path.abspath(app.path)])
 
 def draw_app_at_index(app_i, scroll_position):
