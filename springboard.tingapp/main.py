@@ -77,7 +77,7 @@ class TingApp(object):
             align='top',
         )
 
-apps_dir = 'apps'
+apps_dir = os.environ.get('APPS_DIR', '/apps')
 apps = []
 
 for filename in os.listdir(apps_dir):
