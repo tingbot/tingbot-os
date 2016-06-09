@@ -15,7 +15,7 @@ echo "dtoverlay=tingbot:xohms=80" >> /boot/config.txt
 
 # Map the console tty to the screen for the boot
 # The /boot/cmdline.txt file was set aside in preinst
-sed "1 s/$/ fbcon=map:10/" /boot/cmdline.txt.tbbak > /boot/cmdline.txt
+sed "1 s/$/ fbcon=map:10 consoleblank=0/" /boot/cmdline.txt.tbbak > /boot/cmdline.txt
 
 pip install pip==8.0.3
 pip install wheel==0.29.0 setuptools==20.2.2
