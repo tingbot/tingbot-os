@@ -1,0 +1,8 @@
+[Unit]
+Description=tbbuttonsd
+
+[Service]
+ExecStart=/usr/local/bin/tbbuttonsd
+
+[Install]
+WantedBy=multi-user.target
