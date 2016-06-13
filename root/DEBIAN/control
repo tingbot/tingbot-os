@@ -2,7 +2,7 @@ Package: tingbot-os
 Version: 0.3
 Architecture: all
 Pre-Depends: python (>=2.7), python-pip, python-dev, git
-Depends: avahi-daemon, evtest, tslib, libts-bin, python-pygame, rsync, omxplayer
+Depends: avahi-daemon, evtest, tslib, libts-bin, python-pygame, rsync, omxplayer, wiringpi
 Maintainer: Joe Rickerby
 Description: The Tingbot OS.
 Homepage: http://github.com/tingbot/tingbot-os
