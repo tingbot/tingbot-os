@@ -10,7 +10,7 @@ build/tingbot-os.deb: $(shell find root)
 	mkdir -p build
 	dpkg -b root/ build/tingbot-os.deb
 
-build/disk.img: dl/$(BASE_IMG_NAME) build/tingbot-os.deb
+build/disk.img: dl/$(BASE_IMG_NAME) build/tingbot-os.deb vm-setup.expect vm-build.expect vm-cleanup.expect
 	mkdir -p build
 	cp dl/$(BASE_IMG_NAME) build/disk.img
 	
