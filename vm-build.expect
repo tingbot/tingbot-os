@@ -49,8 +49,8 @@ expect "pi@raspberrypi:~$ "
 send "sudo mount -t vfat /dev/sda1 /boot\r"
 expect "pi@raspberrypi:~$ "
 
-# copy the deb file to the pi
-system "./retry.sh 5 scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i tingbot.key -P 2222 build/tingbot-os.deb pi@localhost:"
+# copy the deb files to the pi
+system "./retry.sh 5 scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i tingbot.key -P 2222 build/tingbot-os.deb libsdl1.2debian_1.2.15-5_armhf.deb pi@localhost:"
 
 # ssh into the vm and run the build script. This moves the main work
 # into a sane shell (not expect!)
