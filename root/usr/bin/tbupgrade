@@ -1,0 +1,158 @@
+#!/usr/bin/python
+
+import requests, subprocess, sys, argparse, tempfile, os, shutil
+
+def log_header(text):
+    print 'tbupgrade: ' + text
+
+def log(text):
+    print 'tbupgrade:   ' + text
+
+def get_installed_version():
+    package_info = subprocess.check_output(['dpkg', '-s', 'tingbot-os'])
+
+    version = None
+
+    for line in package_info.splitlines():
+        if line.startswith('Version:'):
+            _, version = line.split(': ')
+
+    assert version is not None, 'Version not found in dpkg output'
+
+    return version
+
+def get_latest_version_info():
+    '''
+    Returns a tuple of (version, deb_url)
+    e.g. ('0.3', 'http://.../tingbot-os.deb')
+    '''
+    r = requests.get('https://api.github.com/repos/tingbot/tingbot-os/releases/latest')
+
+    r.raise_for_status()
+
+    release = r.json()
+    assets = release['assets']
+
+    deb_url = None
+
+    for asset in assets:
+        if asset['content_type'] == 'application/x-deb':
+            deb_url = asset['browser_download_url']
+
+    assert deb_url is not None, 'Deb file not found on latest Github release'
+
+    version = release['tag_name']
+
+    if version.startswith('v'):
+        # trim the first 'v' from the tag name
+        version = version[1:]
+
+    return version, deb_url
+
+def download(url, filename):
+    with open(filename, "wb") as f:
+        response = requests.get(url, stream=True)
+        response.raise_for_status()
+
+        total_size = response.headers.get('content-length')
+
+        if total_size is None:  # no content length header
+            f.write(response.content)
+        else:
+            downloaded = 0
+            total_size = int(total_size)
+
+            for data in response.iter_content():
+                downloaded += len(data)
+                f.write(data)
+                sys.stdout.write('  %.0i%%\r' % ((100 * downloaded) / total_size))
+                sys.stdout.flush()
+
+
+def install_deb(deb_path):
+    subprocess.check_call(['dpkg', '-i', deb_path])
+
+def install_deb_from_url(deb_url):
+    download_dir = tempfile.mkdtemp()
+
+    try:
+        download_file = os.path.join(download_dir, 'tingbot-os.deb')
+
+        log_header('Downloading new tingbot-os.deb...')
+        download(url=deb_url, filename=download_file)
+        log('Download complete.')
+
+        log_header('Installing with dpkg...')
+        install_deb(download_file)
+        log('Install complete.')
+    finally:
+        shutil.rmtree(download_dir)
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Tingbot OS update utility',
+        epilog='Returns 0 on success, 2 if update is not required.')
+
+    parser.add_argument('--check-only',
+        action='store_true',
+        help='Don\'t update, just check and report if update is required')
+
+    parser.add_argument('-y', '--yes',
+        action='store_true',
+        help='Don\'t ask for confirmation when updating (useful for scripts)')
+
+    return parser.parse_args()
+
+args = None
+
+def main():
+    global args
+    args = parse_arguments()
+
+    try:
+        log_header('Checking installed version...')
+
+        installed_version = get_installed_version()
+        log(installed_version)
+
+        log_header('Checking latest version on Github...')
+
+        latest_version, deb_url = get_latest_version_info()
+        log(latest_version)
+
+        if installed_version == latest_version:
+            log_header('You\'re up to date!')
+            sys.exit(2)
+
+        log_header('Update available.')
+
+        if args.check_only:
+            sys.exit()
+
+        if sys.stdin.isatty() and not args.yes:
+            while True:
+                sys.stdout.write('\nAre you sure you want to update? [y/n] ')
+                response = raw_input()
+                if response in ['n', 'no']:
+                    sys.exit(1)
+                elif response in ['y', 'ye', 'yes']:
+                    break
+
+        install_deb_from_url(deb_url)
+
+        log_header('Update complete.')
+    except Exception as e:
+        import traceback
+
+        print ''
+        print e
+        print ''
+        traceback.print_exc()
+
+        print ''
+        log_header('Upgrade failed.')
+        print ''
+
+        sys.exit(1)
+
+if __name__ == '__main__':
+    main()
