@@ -20,9 +20,10 @@ sed "1 s/$/ fbcon=map:10 consoleblank=0/" /boot/cmdline.txt.tbbak > /boot/cmdlin
 pip install pip==8.0.3
 pip install wheel==0.29.0 setuptools==20.2.2
 pip install requests==2.7.0 evdev==0.5.0
+pip install wifi==0.3.8
 
 pip install git+https://github.com/tingbot/tbprocessd.git@v0.5.0
-pip install git+https://github.com/furbrain/tingbot-python.git
+pip install git+https://github.com/tingbot/tingbot-python.git@v0.5.0
 pip install git+https://github.com/furbrain/tingbot-gui.git
 
 update-rc.d tbwifisetup defaults
