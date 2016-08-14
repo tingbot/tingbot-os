@@ -3,12 +3,18 @@
 
 BASE_IMG_URL := http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2016-03-18/2016-03-18-raspbian-jessie-lite.zip
 BASE_IMG_NAME := $(basename $(notdir $(BASE_IMG_URL))).img
+SPRINGBOARD := root/usr/share/tingbot/springboard.tingapp
 
-build/tingbot-os.deb: $(shell find root)
+build/tingbot-os.deb: $(SPRINGBOARD) $(shell find root)
 	# clean up .DS_Store files
 	find root -name ".DS_Store" -delete
 	mkdir -p build
 	dpkg -b root/ build/tingbot-os.deb
+
+$(SPRINGBOARD):
+	# download springboard and install
+	git clone --depth 1 https://github.com/tingbot/springboard.git dl/springboard
+	cp -r dl/springboard/springboard.tingapp $(SPRINGBOARD)
 
 build/disk.img: dl/$(BASE_IMG_NAME) build/tingbot-os.deb vm-setup.expect vm-build.expect vm-cleanup.expect
 	mkdir -p build
@@ -36,6 +42,8 @@ install: build/tingbot-os.deb
 
 clean:
 	rm -rf build
+	rm -rf dl/springboard
+	rm -rf $(SPRINGBOARD)
 
 dl/$(BASE_IMG_NAME):
 	mkdir -p dl
