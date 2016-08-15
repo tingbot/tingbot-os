@@ -28,6 +28,7 @@ def loop():
             # process is still running
             screen.text('Expanding SD card...',
                 font_size=12,
+                xy=(160,180),
                 color='white')
         elif returncode != 0:
             screen.text('Expand rootfs failed with error %i' % returncode,
