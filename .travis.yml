@@ -6,7 +6,7 @@ cache:
   - dl
 before_install:
 - sudo apt-get -qq update
-- sudo apt-get install -y qemu-arm-system expect
+- sudo apt-get install -y qemu expect
 script:
 - make build
 deploy:
