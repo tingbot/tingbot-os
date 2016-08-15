@@ -6,31 +6,32 @@ BASE_IMG_NAME := $(basename $(notdir $(BASE_IMG_URL))).img
 
 SPRINGBOARD := build/root/usr/share/tingbot/springboard.tingapp
 SPRINGBOARD_COMMIT := 9c8d47
-SPRINGBOARD_TAR_GZ := dl/springboard-$(SPRINGBOARD_COMMIT).tgz
+SPRINGBOARD_TARBALL := dl/springboard-$(SPRINGBOARD_COMMIT).tgz
 
-build/tingbot-os.deb: build/root $(SPRINGBOARD)
+build/tingbot-os.deb: build/root
+	dpkg -b build/root build/tingbot-os.deb
+
+build/root: $(SPRINGBOARD_TARBALL) $(shell find root ! -lname "*")
+	mkdir -p build
+	rm -rf build/root
+
+	cp -R root build/root
 	# clean up .DS_Store files
 	find build/root -name ".DS_Store" -delete
-	mkdir -p build
-	dpkg -b root/ build/tingbot-os.deb
 
-build/root: $(shell find root ! -lname "*")
-	cp -r root build/root
-
-$(SPRINGBOARD_TAR_GZ):
-	# download springboard
-	mkdir -p dl
-	curl -L http://github.com/tingbot/springboard/tarball/$(SPRINGBOARD_COMMIT) -o $(SPRINGBOARD_TAR_GZ)
-
-$(SPRINGBOARD): $(SPRINGBOARD_TAR_GZ)
-	# unarchive to build/springboard
+	# unarchive springboard tarfile to build/springboard
 	rm -rf build/springboard
 	mkdir -p build/springboard
-	tar -xzf $(SPRINGBOARD_TAR_GZ) -C build/springboard
-	# move into place
+	tar -xzf $(SPRINGBOARD_TARBALL) -C build/springboard
+	# move springboard into place
 	rm -rf $(SPRINGBOARD)
 	mkdir -p $(dir $(SPRINGBOARD))
-	mv build/springboard $(SPRINGBOARD)
+	mv build/springboard/*/springboard.tingapp $(SPRINGBOARD)
+
+$(SPRINGBOARD_TARBALL):
+	# download springboard
+	mkdir -p dl
+	curl -L http://github.com/tingbot/springboard/tarball/$(SPRINGBOARD_COMMIT) -o $(SPRINGBOARD_TARBALL)
 
 build/disk.img: dl/$(BASE_IMG_NAME) build/tingbot-os.deb vm-setup.expect vm-build.expect vm-cleanup.expect
 	mkdir -p build
