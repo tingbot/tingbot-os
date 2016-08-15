@@ -1,0 +1,31 @@
+language: c
+sudo: required
+dist: trusty
+compiler:
+- clang
+cache:
+  directories:
+  - dl
+before_install:
+- sudo apt-get -qq update
+- sudo apt-get install -y qemu-system-arm expect
+script:
+- make build
+deploy:
+  provider: releases
+  api_key:
+    secure: mjoMXlcVeRr3I7szBxXjikl9aGs1Up5W1yoIMJDo2EXV2X2WFgE55j4aDh6TIB3PwZ/T3Rn5TT8uC8fGV31Y3ll5MDOKQEsRkZUGEX9M7xCGuDc35HzXzVeQW7CZt4fmyInrb9yjTHz1RaQ+ijpPK9+MV91KR4aV/JqjKv7GZDvmmWgspWJEb0PIH3Z4l0jfjsg1BTxnI1QCJd14zI4GoP7MPP14Mztt7gBc6tw+D8+9F3Jxk42GGz/GpO58ewZ6RkOaGLIz4GtzDe81BDYrVOJGIDCKg17BRCkrgFqKbPsX34CCK1FqQge54v3L4plleblkivqH3tKilT+eNYM4NRFwSeVYPPRIHwK2Bk3Jq19uUbyUlOBaA/C+y8gwUyYUVJsEZCnwin7UR8UClzYXNDfuxDyhFptIkjapNPk4ci1X1r5e4TaSDXHhBM+Grti8JN3xDpaAHBOxa7HCnnhHss1ACgzy1OmU/KwDz2UKd2XyNJfAeAlXipatuR1stgUCgo2Go8Mz9oRKOVxmZmoToNKZDe5aUm9LLNWHKApz0xvQWgoiK5iN4rA78YB1S0N4ANov8gFWYGRcBGAnRvbt3UhwqH7Gw31IzguYOHDM1C6uJsCY922K1B4S9qe8euPfsNMeDClK1tApJ4PWe0IGHQYt56LZ305L0o/WGbSXGRo=
+  file:
+  - build/disk.img.zip
+  - build/tingbot-os.deb
+  on:
+    repo: tingbot/tingbot-os
+addons:
+  artifacts:
+    key: AKIAIUEBTYLXVJ74SHFQ
+    secret:
+      secure: K8Betbm/JiBW6T0QEYCusB8OWO7fRjmJttl3yvEJ+6MoTcW6TR5KqGZK88LINoNeVb4fq9H5rzM6ovp5WbHaXvu71yNx+wmMdHlARj+Z6NU/MA4rsHwjDEG7DklgG5UkBAun1Ha97bSql0VqKQBYQt/u2HzIFVk10Buo+wDW/Ui2Wc/s4+JYeUZKcHxkRaOXRHEjS8zO/UTjjMRecK0N8cmDra0SmyDdYkuCnKrmlexJRgKuUXBcYgaInnSl6s+n4sgll9GPBeH65GG4yYY0zbSIZhnjJ32SSDFcjRLr0ktJxWBja+HsEU7mY92ObqoPS+mGDUr4ecc1TM15KgstBekj7oSVBk81mwQ9dAd3wCA9W3T3YTt9QIrbDRiudOHCrplLME4K5uO1e8LlhosExI1bo3JLh6LknaJISTJar4skFnse2BHw65sUbsA3XOioI1veDvf5MpWIjTYmTtZUsWH+hXAt3we7A+KbKds8q7y4hFLbk2XbW+WAL6s835JsoKye/C/Yxha6+EmJHgb5FEIH/jJeT6kdYB/zF/oqXSC4Bud6wOHs09bZozonF1VmDWk2148toHQUFDR8usPodmyCNBavuYZrKz87GdH1/janZNNyuXHUAmIiWDPfBUqsCui0LkySAyi1NSKqK4QshbxFgki4rj89dpvAgaxGBvs=
+    bucket: tingbot-builds
+    paths:
+    - build/disk.img.zip
+    - build/tingbot-os.deb

@@ -28,4 +28,4 @@ send "\x04"
 
 expect eof
 
-system "./patch-img.py $'#usr/lib/arm-linux-gnueabihf/libarmmem.so\n' $'/usr/lib/arm-linux-gnueabihf/libarmmem.so\n' build/disk.img"
+system "./patch-img.py '#usr/lib/arm-linux-gnueabihf/libarmmem.so\n' '/usr/lib/arm-linux-gnueabihf/libarmmem.so\n' build/disk.img"
