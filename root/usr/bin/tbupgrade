@@ -70,7 +70,7 @@ def download(url, filename):
 
 
 def install_deb(deb_path):
-    subprocess.check_call(['dpkg', '-i', deb_path])
+    subprocess.check_call(['gdebi', '--non-interactive', deb_path])
 
 def install_deb_from_url(deb_url):
     download_dir = tempfile.mkdtemp()
