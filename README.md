@@ -8,9 +8,12 @@ The build.sh script is where the 'real' setup goes.
 Requirements
 ------------
 
-- qemu
+- qemu (and expect on linux)
 
-  `brew install qemu`
+  `brew install qemu` (MacOSX)
+  `sudo apt-get install qemu expect` (Debian/Ubuntu)
+  
+  
   
 Usage
 -----
