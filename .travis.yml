@@ -11,15 +11,6 @@ before_install:
 - sudo apt-get install -y qemu-system-arm expect
 script:
 - make build
-deploy:
-  provider: releases
-  api_key:
-    secure: mjoMXlcVeRr3I7szBxXjikl9aGs1Up5W1yoIMJDo2EXV2X2WFgE55j4aDh6TIB3PwZ/T3Rn5TT8uC8fGV31Y3ll5MDOKQEsRkZUGEX9M7xCGuDc35HzXzVeQW7CZt4fmyInrb9yjTHz1RaQ+ijpPK9+MV91KR4aV/JqjKv7GZDvmmWgspWJEb0PIH3Z4l0jfjsg1BTxnI1QCJd14zI4GoP7MPP14Mztt7gBc6tw+D8+9F3Jxk42GGz/GpO58ewZ6RkOaGLIz4GtzDe81BDYrVOJGIDCKg17BRCkrgFqKbPsX34CCK1FqQge54v3L4plleblkivqH3tKilT+eNYM4NRFwSeVYPPRIHwK2Bk3Jq19uUbyUlOBaA/C+y8gwUyYUVJsEZCnwin7UR8UClzYXNDfuxDyhFptIkjapNPk4ci1X1r5e4TaSDXHhBM+Grti8JN3xDpaAHBOxa7HCnnhHss1ACgzy1OmU/KwDz2UKd2XyNJfAeAlXipatuR1stgUCgo2Go8Mz9oRKOVxmZmoToNKZDe5aUm9LLNWHKApz0xvQWgoiK5iN4rA78YB1S0N4ANov8gFWYGRcBGAnRvbt3UhwqH7Gw31IzguYOHDM1C6uJsCY922K1B4S9qe8euPfsNMeDClK1tApJ4PWe0IGHQYt56LZ305L0o/WGbSXGRo=
-  file:
-  - build/disk.img.zip
-  - build/tingbot-os.deb
-  on:
-    repo: tingbot/tingbot-os
 addons:
   artifacts:
     key: AKIAIUEBTYLXVJ74SHFQ
@@ -29,3 +20,13 @@ addons:
     paths:
     - build/disk.img.zip
     - build/tingbot-os.deb
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: mjoMXlcVeRr3I7szBxXjikl9aGs1Up5W1yoIMJDo2EXV2X2WFgE55j4aDh6TIB3PwZ/T3Rn5TT8uC8fGV31Y3ll5MDOKQEsRkZUGEX9M7xCGuDc35HzXzVeQW7CZt4fmyInrb9yjTHz1RaQ+ijpPK9+MV91KR4aV/JqjKv7GZDvmmWgspWJEb0PIH3Z4l0jfjsg1BTxnI1QCJd14zI4GoP7MPP14Mztt7gBc6tw+D8+9F3Jxk42GGz/GpO58ewZ6RkOaGLIz4GtzDe81BDYrVOJGIDCKg17BRCkrgFqKbPsX34CCK1FqQge54v3L4plleblkivqH3tKilT+eNYM4NRFwSeVYPPRIHwK2Bk3Jq19uUbyUlOBaA/C+y8gwUyYUVJsEZCnwin7UR8UClzYXNDfuxDyhFptIkjapNPk4ci1X1r5e4TaSDXHhBM+Grti8JN3xDpaAHBOxa7HCnnhHss1ACgzy1OmU/KwDz2UKd2XyNJfAeAlXipatuR1stgUCgo2Go8Mz9oRKOVxmZmoToNKZDe5aUm9LLNWHKApz0xvQWgoiK5iN4rA78YB1S0N4ANov8gFWYGRcBGAnRvbt3UhwqH7Gw31IzguYOHDM1C6uJsCY922K1B4S9qe8euPfsNMeDClK1tApJ4PWe0IGHQYt56LZ305L0o/WGbSXGRo=
+  file:
+  - build/disk.img.zip
+  - build/tingbot-os.deb
+  on:
+    repo: tingbot/tingbot-os
