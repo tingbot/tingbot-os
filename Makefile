@@ -3,11 +3,12 @@
 
 BASE_IMG_URL := http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2016-03-18/2016-03-18-raspbian-jessie-lite.zip
 BASE_IMG_NAME := $(basename $(notdir $(BASE_IMG_URL))).img
+
 SPRINGBOARD := build/root/usr/share/tingbot/springboard.tingapp
 SPRINGBOARD_COMMIT := 9c8d47
+SPRINGBOARD_TAR_GZ := dl/springboard-$(SPRINGBOARD_COMMIT).tgz
 
-
-build/tingbot-os.deb: $(SPRINGBOARD) build/root
+build/tingbot-os.deb: build/root $(SPRINGBOARD)
 	# clean up .DS_Store files
 	find build/root -name ".DS_Store" -delete
 	mkdir -p build
@@ -16,15 +17,20 @@ build/tingbot-os.deb: $(SPRINGBOARD) build/root
 build/root: $(shell find root ! -lname "*")
 	cp -r root build/root
 
-dl/springboard.tgz:
+$(SPRINGBOARD_TAR_GZ):
 	# download springboard
 	mkdir -p dl
-	curl -L http://github.com/tingbot/springboard/tarball/$(SPRINGBOARD_COMMIT) -o dl/springboard.tgz
+	curl -L http://github.com/tingbot/springboard/tarball/$(SPRINGBOARD_COMMIT) -o $(SPRINGBOARD_TAR_GZ)
 
-$(SPRINGBOARD): dl/springboard.tgz
-	# install springboard
-	mkdir -p $(SPRINGBOARD)
-	tar xzf dl/springboard.tgz -C $(SPRINGBOARD) --transform "s#.*/springboard.tingapp##" --wildcards "*/springboard.tingapp/"
+$(SPRINGBOARD): $(SPRINGBOARD_TAR_GZ)
+	# unarchive to build/springboard
+	rm -rf build/springboard
+	mkdir -p build/springboard
+	tar -xzf $(SPRINGBOARD_TAR_GZ) -C build/springboard
+	# move into place
+	rm -rf $(SPRINGBOARD)
+	mkdir -p $(dir $(SPRINGBOARD))
+	mv build/springboard $(SPRINGBOARD)
 
 build/disk.img: dl/$(BASE_IMG_NAME) build/tingbot-os.deb vm-setup.expect vm-build.expect vm-cleanup.expect
 	mkdir -p build
