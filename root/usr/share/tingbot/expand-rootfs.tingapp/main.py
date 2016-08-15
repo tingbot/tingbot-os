@@ -32,9 +32,9 @@ def loop():
                 color='white')
         elif returncode != 0:
             screen.text('Expand rootfs failed with error %i' % returncode,
-               font_size=12,
-               xy=(160,180),
-               color='white')
+                font_size=12,
+                xy=(160,180),
+                color='white')
         else:
             screen.text('Success. Tingbot is rebooting...',
                 font_size=12,
