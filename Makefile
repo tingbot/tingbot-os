@@ -17,10 +17,12 @@ build/root: $(shell find root ! -lname "*")
 	cp -r root build/root
 
 dl/springboard.tgz:
+	# download springboard
+	mkdir -p dl
 	wget http://github.com/tingbot/springboard/tarball/$(SPRINGBOARD_COMMIT) -O dl/springboard.tgz
 
 $(SPRINGBOARD): dl/springboard.tgz
-	# download springboard and install
+	# install springboard
 	mkdir -p $(SPRINGBOARD)
 	tar xzf dl/springboard.tgz -C $(SPRINGBOARD) --transform "s#.*/springboard.tingapp##" --wildcards "*/springboard.tingapp/"
 
@@ -50,7 +52,6 @@ install: build/tingbot-os.deb
 
 clean:
 	rm -rf build
-	rm -rf dl/springboard.tgz
 
 dl/$(BASE_IMG_NAME):
 	mkdir -p dl
