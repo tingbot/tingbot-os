@@ -30,3 +30,4 @@ deploy:
   - build/tingbot-os.deb
   on:
     repo: tingbot/tingbot-os
+    tags: true
