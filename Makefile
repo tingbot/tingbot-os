@@ -19,7 +19,7 @@ build/root: $(shell find root ! -lname "*")
 dl/springboard.tgz:
 	# download springboard
 	mkdir -p dl
-	wget http://github.com/tingbot/springboard/tarball/$(SPRINGBOARD_COMMIT) -O dl/springboard.tgz
+	curl -L http://github.com/tingbot/springboard/tarball/$(SPRINGBOARD_COMMIT) -o dl/springboard.tgz
 
 $(SPRINGBOARD): dl/springboard.tgz
 	# install springboard
