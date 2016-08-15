@@ -1,5 +1,6 @@
 [Unit]
 Description=tbprocessd
+After=network.target
 
 [Service]
 Environment=HOME_APP=/apps/home

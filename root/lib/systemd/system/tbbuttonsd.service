@@ -1,5 +1,6 @@
 [Unit]
 Description=tbbuttonsd
+After=network.target
 
 [Service]
 ExecStart=/usr/local/bin/tbbuttonsd
