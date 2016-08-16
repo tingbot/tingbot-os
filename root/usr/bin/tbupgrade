@@ -112,12 +112,12 @@ def main():
         log_header('Checking installed version...')
 
         installed_version = get_installed_version()
-        log(installed_version)
+        log('Installed version: ' + installed_version)
 
         log_header('Checking latest version on Github...')
 
         latest_version, deb_url = get_latest_version_info()
-        log(latest_version)
+        log('Latest version: ' + latest_version)
 
         if installed_version == latest_version:
             log_header('You\'re up to date!')
