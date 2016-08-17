@@ -96,6 +96,10 @@ def parse_arguments():
         action='store_true',
         help='Don\'t update, just check and report if update is required')
 
+    parser.add_argument('--deb-url',
+        action='store',
+        help='Don\'t check, just download and install the deb at the URL')
+
     parser.add_argument('-y', '--yes',
         action='store_true',
         help='Don\'t ask for confirmation when updating (useful for scripts)')
@@ -109,21 +113,26 @@ def main():
     args = parse_arguments()
 
     try:
-        log_header('Checking installed version...')
+        if args.deb_url:
+            deb_url = args.deb_url
+            log_header('Installing deb from URL')
+            log(deb_url)
+        else:
+            log_header('Checking installed version...')
 
-        installed_version = get_installed_version()
-        log('Installed version: ' + installed_version)
+            installed_version = get_installed_version()
+            log('Installed version: ' + installed_version)
 
-        log_header('Checking latest version on Github...')
+            log_header('Checking latest version on Github...')
 
-        latest_version, deb_url = get_latest_version_info()
-        log('Latest version: ' + latest_version)
+            latest_version, deb_url = get_latest_version_info()
+            log('Latest version: ' + latest_version)
 
-        if installed_version == latest_version:
-            log_header('You\'re up to date!')
-            sys.exit(2)
+            if installed_version == latest_version:
+                log_header('You\'re up to date!')
+                sys.exit(2)
 
-        log_header('Update available.')
+            log_header('Update available.')
 
         if args.check_only:
             sys.exit()
