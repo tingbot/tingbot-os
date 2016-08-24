@@ -36,7 +36,7 @@ def get_latest_version_info():
     deb_url = None
 
     for asset in assets:
-        if asset['content_type'] == 'application/x-deb':
+        if asset['name'].endswith('.deb'):
             deb_url = asset['browser_download_url']
 
     assert deb_url is not None, 'Deb file not found on latest Github release'
