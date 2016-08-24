@@ -28,6 +28,7 @@ deploy:
   file:
   - build/disk.img.zip
   - build/tingbot-os.deb
+  prerelease: true  # releases created by travis are created as prerelease and are manually approved
   on:
     repo: tingbot/tingbot-os
     tags: true
