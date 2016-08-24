@@ -1,5 +1,5 @@
 Package: tingbot-os
-Version: 0.5.0
+Version: 0.6.0
 Architecture: all
 Pre-Depends: python (>=2.7), python-pip, python-dev, git
 Depends: avahi-daemon, evtest, tslib, libts-bin, python-pygame, rsync, omxplayer, wiringpi, libsdl1.2debian (=1.2.15-5), python-zmq, python-imaging, libffi-dev, libssl-dev
