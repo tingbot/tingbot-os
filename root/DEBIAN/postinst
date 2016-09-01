@@ -34,5 +34,7 @@ tbtool build /usr/share/tingbot/springboard.tingapp
 
 update-rc.d tbwifisetup defaults
 update-rc.d tbwifisetup enable
+
+systemctl disable getty@tty1
 systemctl enable tbprocessd
 systemctl enable tbbuttonsd

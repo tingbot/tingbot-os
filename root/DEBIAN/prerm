@@ -12,5 +12,6 @@ fi
 
 update-rc.d -f tbwifisetup remove
 
+systemctl enable getty@tty1
 systemctl disable tbprocessd
 systemctl disable tbbuttonsd

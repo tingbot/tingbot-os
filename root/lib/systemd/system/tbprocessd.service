@@ -6,6 +6,9 @@ After=network.target
 Environment=HOME_APP=/apps/home
 Environment=STARTUP_APP=/apps/startup
 ExecStart=/usr/local/bin/tbprocessd
+StandardInput=tty-force
+StandardOutput=tty
+TTYPath=/dev/tty1
 
 [Install]
 WantedBy=multi-user.target
