@@ -4,6 +4,7 @@ set -o errexit
 
 if [ "$1" = "remove" -o "$1" = "abort-install" -o "$1" = "disappear" ]; then
     rm -f /boot/overlays/tingbot-overlay.dtb
+    rm -f /boot/.tingbot
 
     tbtool clean /usr/share/tingbot/expand-rootfs.tingapp
     tbtool clean /usr/share/tingbot/springboard.tingapp

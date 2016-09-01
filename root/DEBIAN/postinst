@@ -4,6 +4,8 @@ set -o errexit
 
 # Copy the Tingbot screen overlay into place
 cp /opt/tingbot-os/tingbot-overlay.dtb /boot/overlays/tingbot-overlay.dtb
+# Add tingbot sentinel file
+touch /boot/.tingbot
 
 # Load the Tingbot screen overlay at boot
 # The /boot/config.txt file was set aside in preinst
