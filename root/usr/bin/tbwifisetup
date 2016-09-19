@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, json, subprocess
+import sys, json, subprocess, os
 
 output = ''
 
@@ -8,6 +8,10 @@ output += 'ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n'
 output += 'update_config=1\n'
 
 output += '\n'
+
+if not os.path.exists('/boot/networks.json'):
+    sys.stderr.write("tbwifisetup: /boot/networks.json doesn't exist. Exiting.")
+    sys.exit(0)
 
 with open('/boot/networks.json') as f:
     networks = json.load(f)
