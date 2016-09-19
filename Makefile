@@ -5,7 +5,7 @@ BASE_IMG_URL := http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_l
 BASE_IMG_NAME := $(basename $(notdir $(BASE_IMG_URL))).img
 
 SPRINGBOARD := build/root/usr/share/tingbot/springboard.tingapp
-SPRINGBOARD_COMMIT := a4ab4f6f503db64bc976b4db696e916efc6935bb
+SPRINGBOARD_COMMIT := e9872b6c189bdd716ceb92fba9bbff9e5765ce8a
 SPRINGBOARD_TARBALL := dl/springboard-$(SPRINGBOARD_COMMIT).tgz
 
 build/tingbot-os.deb: build/root
