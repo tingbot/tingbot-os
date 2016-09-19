@@ -9,7 +9,8 @@ output += 'update_config=1\n'
 
 output += '\n'
 
-networks = json.load(sys.stdin)
+with open('/boot/networks.json') as f:
+    networks = json.load(f)
 
 for network in networks:
     ssid = network['ssid']
@@ -17,4 +18,5 @@ for network in networks:
 
     output += subprocess.check_output(['/usr/bin/wpa_passphrase', ssid, passphrase])
 
-sys.stdout.write(output)
+with open('/etc/wpa_supplicant/wpa_supplicant.conf', 'w') as f:
+    f.write(output)

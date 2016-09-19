@@ -10,8 +10,7 @@ if [ "$1" = "remove" -o "$1" = "abort-install" -o "$1" = "disappear" ]; then
     tbtool clean /usr/share/tingbot/springboard.tingapp
 fi
 
-update-rc.d -f tbwifisetup remove
-
 systemctl enable getty@tty1
 systemctl disable tbprocessd
 systemctl disable tbbuttonsd
+systemctl disable tbwifisetup

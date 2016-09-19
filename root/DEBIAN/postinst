@@ -32,9 +32,7 @@ pip install git+https://github.com/tingbot/tingbot-python.git@v0.10.1
 tbtool build /usr/share/tingbot/expand-rootfs.tingapp
 tbtool build /usr/share/tingbot/springboard.tingapp
 
-update-rc.d tbwifisetup defaults
-update-rc.d tbwifisetup enable
-
 systemctl disable getty@tty1
 systemctl enable tbprocessd
 systemctl enable tbbuttonsd
+systemctl enable tbwifisetup

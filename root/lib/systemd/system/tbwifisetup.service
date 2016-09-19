@@ -1,0 +1,14 @@
+[Unit]
+Description=tbwifisetup
+DefaultDependencies=no
+Requires=boot.mount
+After=boot.mount
+Wants=ifup@wlan0.service
+Before=ifup@wlan0.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/tbwifisetup
+
+[Install]
+RequiredBy=network.target
