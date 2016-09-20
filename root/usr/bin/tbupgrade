@@ -62,7 +62,7 @@ def download(url, filename):
             downloaded = 0
             total_size = int(total_size)
 
-            for data in response.iter_content():
+            for data in response.iter_content(1024):
                 downloaded += len(data)
                 f.write(data)
                 sys.stdout.write('  %.0i%%\r' % ((100 * downloaded) / total_size))
