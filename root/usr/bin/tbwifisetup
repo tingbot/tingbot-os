@@ -53,6 +53,9 @@ def main():
         if network.get('hidden'):
             write_line('\tscan_ssid=1')
 
+        if network.get('extra'):
+            write_line('\t%s' % network['extra'])
+
         write_line('}')
         write_line()
 
