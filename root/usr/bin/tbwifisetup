@@ -1,26 +1,63 @@
 #!/usr/bin/python
 
+'''
+Writes a wpa_supplicant config file using the WiFi network info
+stored at /boot/networks.json
+'''
+
+__version__ = '1.1'
+
 import sys, json, subprocess, os
+from StringIO import StringIO
+from optparse import OptionParser
 
-output = ''
 
-output += 'ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n'
-output += 'update_config=1\n'
+def main():
+    parser = OptionParser(description=__doc__, version=__version__)
+    parser.add_option('-i', '--input', default='/boot/networks.json')
+    parser.add_option('-o', '--output', default='/etc/wpa_supplicant/wpa_supplicant.conf')
 
-output += '\n'
+    (options, args) = parser.parse_args()
 
-if not os.path.exists('/boot/networks.json'):
-    sys.stderr.write("tbwifisetup: /boot/networks.json doesn't exist. Exiting.")
-    sys.exit(0)
+    output = StringIO()
 
-with open('/boot/networks.json') as f:
-    networks = json.load(f)
+    def write_line(line=''):
+        output.write(line)
+        output.write('\n')
 
-for network in networks:
-    ssid = network['ssid']
-    passphrase = network['passphrase']
+    write_line('ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev')
+    write_line('update_config=1')
+    write_line()
 
-    output += subprocess.check_output(['/usr/bin/wpa_passphrase', ssid, passphrase])
+    if not os.path.exists(options.input):
+        sys.stderr.write("tbwifisetup: %s doesn't exist. Exiting.\n" % options.input)
+        sys.exit(0)
 
-with open('/etc/wpa_supplicant/wpa_supplicant.conf', 'w') as f:
-    f.write(output)
+    with open(options.input) as f:
+        networks = json.load(f)
+
+    for network in networks:
+        # note: wpa_supplicant doesn't support double-quotes in any variable,
+        # this is a limitation of it's config file parser - it simply searches for
+        # the next double-quote and sets that as the end of the string. So there's
+        # no use in trying to escape them here.
+
+        write_line('network={')
+        write_line('\tssid="%s"' % network['ssid'])
+
+        if network.get('passphrase'):
+            write_line('\tpsk="%s"' % network['passphrase'])
+        else:
+            write_line('\tkey_mgmt=NONE')
+
+        if network.get('hidden'):
+            write_line('\tscan_ssid=1')
+
+        write_line('}')
+        write_line()
+
+    with open(options.output, 'w') as f:
+        f.write(output.getvalue())
+
+if __name__ == '__main__':
+    main()
