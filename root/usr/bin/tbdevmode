@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -o errexit
+
+cd ~
+
+git clone https://github.com/tingbot/tbprocessd.git
+git clone https://github.com/tingbot/tingbot-os.git
+git clone https://github.com/tingbot/springboard.git
+git clone https://github.com/tingbot/tingbot-python.git
