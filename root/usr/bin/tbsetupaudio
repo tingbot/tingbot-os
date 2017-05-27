@@ -1,0 +1,16 @@
+#!/usr/bin/python
+import os
+
+def main():
+    sound_drivers = []
+    with open('/proc/asound/modules') as f:
+        for line in f:
+            sound_drivers = line.split()
+    
+    preferred_device_id = sound_drivers[0]
+
+    with open(os.path.expanduser('~/.asoundrc'), 'w') as f:
+        f.write('pcm.!default {{ type plug slave {{ pcm "hw:{d},0" }} }}\nctl.!default {{ type hw card {d} }}'.format(d=preferred_device_id))
+
+if __name__ == '__main__':
+    main()
