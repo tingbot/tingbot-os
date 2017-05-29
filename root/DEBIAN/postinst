@@ -30,7 +30,7 @@ pip install pyasn1==0.1.8
 pip install wiringpi==2.32.1
 
 pip install git+https://github.com/tingbot/tbprocessd.git@v0.6.0
-pip install git+https://github.com/tingbot/tingbot-python.git@v1.2.0
+pip install git+https://github.com/tingbot/tingbot-python.git@v1.2.1
 
 tbtool build /usr/share/tingbot/expand-rootfs.tingapp
 # pip doesn't install git commit SHAs properly, and tingbot-gui hasn't incremented its version
