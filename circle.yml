@@ -1,0 +1,19 @@
+dependencies:
+  cache_directories:
+    - dl
+  post:
+    - sudo apt-get -qq update
+    - sudo apt-get install -y qemu-system-arm expect
+
+compile:
+  override:
+    make build
+
+general:
+  artifacts:
+    - "build/disk.img.zip"
+    - "build/tingbot-os.deb"
+
+test:
+  override:
+    - true
