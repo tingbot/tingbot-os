@@ -7,7 +7,7 @@ dependencies:
 
 compile:
   override:
-    make build
+    - make build
 
 general:
   artifacts:
@@ -16,4 +16,4 @@ general:
 
 test:
   override:
-    - true
+    - "true"
