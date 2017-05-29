@@ -42,6 +42,7 @@ build/disk.img: dl/$(BASE_IMG_NAME) build/tingbot-os.deb vm-setup.expect vm-buil
 	
 	chmod 600 tingbot.key
 	expect -f vm-setup.expect
+	expect -f vm-resize.expect
 	expect -f vm-build.expect
 	expect -f vm-cleanup.expect
 

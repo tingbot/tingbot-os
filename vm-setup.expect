@@ -31,11 +31,6 @@ send "mv /etc/fstab /etc/fstab.bak\r"
 expect "# "
 send "echo 'proc            /proc           proc    defaults          0       0' > /etc/fstab\r"
 
-# resize the main partition
-# the filesystem will be expanded on next boot.
-expect "# "
-send "parted -s /dev/sda resizepart 2 100%\r"
-
 expect "# "
 send "sync\r"
 

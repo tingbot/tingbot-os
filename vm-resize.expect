@@ -1,0 +1,26 @@
+#!/usr/bin/expect -f
+
+set timeout 300
+
+spawn qemu-system-arm \
+    -kernel kernel-qemu \
+    -cpu arm1176 \
+    -m 256 \
+    -M versatilepb \
+    -no-reboot \
+    -nographic \
+    -append "root=/dev/sda2 panic=1 rootfstype=ext4 rw console=ttyAMA0" \
+    -hda build/disk.img 
+
+expect "raspberrypi login: "
+send "pi\r"
+
+expect "Password: "
+send "raspberry\r"
+
+# make the filesystem fill the main partition
+expect "pi@raspberrypi:~$ "
+send "sudo parted -s /dev/sda resizepart 2 100%\r"
+
+send "sudo shutdown -r now\r"
+expect eof
