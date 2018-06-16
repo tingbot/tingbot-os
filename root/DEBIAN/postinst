@@ -19,9 +19,9 @@ echo "dtoverlay=tingbot:xohms=80" >> /boot/config.txt
 # The /boot/cmdline.txt file was set aside in preinst
 sed "1 s/$/ fbcon=map:10 consoleblank=0/" /boot/cmdline.txt.tbbak > /boot/cmdline.txt
 
-pip install pip==8.0.3
-pip install wheel==0.29.0 setuptools==20.2.2
-pip install requests==2.7.0 evdev==0.5.0
+pip install pip==10.0.1
+pip install wheel==0.31.1 setuptools==39.2.0
+pip install requests==2.19.1 evdev==0.5.0
 
 # pip can't resolve dependencies correctly, see https://github.com/pypa/pip/issues/988
 pip install pyasn1==0.1.8
